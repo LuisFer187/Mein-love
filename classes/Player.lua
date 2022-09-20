@@ -2,6 +2,8 @@ Player = {}
 Player.__index = Player
 
 local anim8 = require("lib.anim8")
+require("classes.Bullets")
+local bullets = Bullets:create()
 
 function Player:create(x, y, h, w, name)
    local self = {}             -- our new object
@@ -20,6 +22,12 @@ function Player:create(x, y, h, w, name)
    self.anim_walk_l = anim8.newAnimation(g('8-2',2), 0.1)
    self.anim_idle_l = anim8.newAnimation(g('7-8',2), 0.4)
    return self
+end
+
+function Player:shoot()
+   if love.mouse.isDown(1) then
+      bullets:spawn(self.x, self.y)
+   end
 end
 
 function Player:move(dt)
@@ -73,6 +81,7 @@ function Player:draw()
    if(self.state=="idle_l") then
       self.anim_idle_l:draw(self.img, self.x, self.y, nil, 2)
    end
+   bullets:draw()
 end
 
 function Player:update_anim(dt)
@@ -80,4 +89,5 @@ function Player:update_anim(dt)
    self.anim_walk_l:update(dt)
    self.anim_idle_r:update(dt)
    self.anim_idle_l:update(dt)
+   bullets:update(dt)
 end
