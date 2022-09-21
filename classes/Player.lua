@@ -27,7 +27,6 @@ end
 
 function love.mousereleased(x, y, button)
    if button == 1 then
-      print("Realeased")
       IsOnClik=false
    end
 end
