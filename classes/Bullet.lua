@@ -1,23 +1,21 @@
 Bullet = {}
 Bullet.__index = Bullet
 
-function Bullet:create(x, y, r)
+function Bullet:create(x, y,ph,pw)
     local self = {}             
     setmetatable(self,Bullet)
-    self.x = x
-    self.y = y
-    self.vel = 1
-    --local mx, my = love.mouse.getPosition()
-    --local unit = math.sqrt(math.pow((mx-self.x),2)+math.pow((my-self.y),2))
-    --self.speedx= ((mx-self.x)/unit)*self.vel
-    --self.speedy= ((my-self.y)/unit)*self.vel
-    self.speedy = 1
-    self.speedx = 1
-    self.r = r
+    self.x = x+(pw/2)
+    self.y = y+(ph*2)
+    self.vel = 500
+    local mx, my = love.mouse.getPosition()
+    local mag = math.sqrt(math.pow(mx-self.x,2)+math.pow(my-self.y,2))
+    self.dirx = (mx-self.x)/mag
+    self.diry = (my-self.y)/mag
+    self.r = 3
     return self
 end
 
 function Bullet:update(dt)
-    self.y=self.y+1
-    self.x=self.x+1
+    self.y=self.y+self.diry*self.vel*dt
+    self.x=self.x+self.dirx*self.vel*dt
 end

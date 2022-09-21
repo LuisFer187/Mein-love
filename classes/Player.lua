@@ -4,6 +4,7 @@ Player.__index = Player
 local anim8 = require("lib.anim8")
 require("classes.Bullets")
 local bullets = Bullets:create()
+IsOnClik = false
 
 function Player:create(x, y, h, w, name)
    local self = {}             -- our new object
@@ -24,9 +25,17 @@ function Player:create(x, y, h, w, name)
    return self
 end
 
+function love.mousereleased(x, y, button)
+   if button == 1 then
+      print("Realeased")
+      IsOnClik=false
+   end
+end
+
 function Player:shoot()
-   if love.mouse.isDown(1) then
-      bullets:spawn(self.x, self.y)
+   if love.mouse.isDown(1) and not IsOnClik then
+      bullets:spawn(self.x, self.y, self.h, self.w)
+      IsOnClik=true
    end
 end
 

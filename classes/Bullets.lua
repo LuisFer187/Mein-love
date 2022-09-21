@@ -4,14 +4,13 @@ require("classes.Bullet")
 
 function Bullets:create()
     local self = {}             
-    setmetatable(self,Bullet)
+    setmetatable(self,Bullets)
     self.list = {}
     return self
 end
 
-function Bullets:spawn(x,y)
-    local i = Bullet:create(x, y, 10)
-    table.insert(self.list, i)
+function Bullets:spawn(x,y,ph,pw)
+    table.insert(self.list, Bullet:create(x, y,ph,pw))
 end
 
 function Bullets:draw()
